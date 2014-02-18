@@ -45,7 +45,11 @@ $temp$;
   idx = utils.index_of_batch batches, batch
   temporary = temp.path()
   fs.writeFileSync temporary, batch_contents, "utf-8"
-  pg = spawn 'psql', ["-U#{nconf.get('database:user')}", "-h#{nconf.get('database:host')}", nconf.get('database:name'), "-f#{temporary}"]
+  args = ["-U#{nconf.get('database:user')}"]
+  args.push "-h#{nconf.get('database:host')}" if nconf.get('database:host')
+  args.push nconf.get('database:name')
+  args.push "-f#{temporary}"
+  pg = spawn 'psql', args
   error = null
   buffer = ""
   pg.stdout.on 'data', (data) ->
