@@ -3,12 +3,24 @@
   "description": "database version control",
   "version": "0.0.1",
   "author": "Aubrey Keus <aekeus@gmail.com>",
+  "homepage": "https://github.com/aekeus/verdb",
+  "bugs": "https://github.com/aekeus/verdb/issues",
   "dependencies": {
     "nconf": ">= 0.6.9",
     "optimist": "0.6.0",
     "temp": "*",
     "colors": "*",
     "async": "*"
+  },
+   "keywords": [
+    "postgres",
+    "database",
+    "version",
+    "control"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/aekeus/verdb.git"
   },
   "bin": {
     "verdb": "./bin/verdb"
