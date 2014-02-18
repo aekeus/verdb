@@ -1,7 +1,7 @@
 {
   "name": "verdb",
   "description": "database version control",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Aubrey Keus <aekeus@gmail.com>",
   "homepage": "https://github.com/aekeus/verdb",
   "bugs": "https://github.com/aekeus/verdb/issues",
@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "http://github.com/aekeus/verdb.git"
+    "url": "git+https://aekeus@github.com/aekeus/verdb.git#master"
   },
   "bin": {
     "verdb": "./bin/verdb"
