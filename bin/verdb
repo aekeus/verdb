@@ -51,7 +51,8 @@ $temp$;
   pg.stdout.on 'data', (data) ->
     buffer += data.toString('utf-8')
   pg.stderr.on 'data', (data) ->
-    error = data.toString('utf-8')
+    e = data.toString('utf-8')
+    error += e if e.match /ERROR/
   pg.on 'close', ->
     fs.unlinkSync temporary
     if not error
