@@ -1,0 +1,111 @@
+#!/usr/bin/env coffee
+fs     = require 'fs'
+nconf  = require 'nconf'
+temp   = require 'temp'
+colors = require 'colors'
+crypto = require 'crypto'
+async  = require 'async'
+spawn  = require('child_process').spawn
+
+cmds    = require '../lib/cmds'
+show    = require '../lib/show'
+set     = require '../lib/set'
+control = require '../lib/control'
+reset   = require '../lib/reset'
+init    = require '../lib/init'
+utils   = require '../lib/utils'
+
+CONFIG_FILENAME = '.verdb.json'
+
+argv = require('optimist').argv
+
+nconf.argv().env().file
+  file: CONFIG_FILENAME
+
+crypt = (text) -> crypto.createHash('md5').update(text).digest("hex")
+
+persist = (nconf) ->
+  nconf.save (err) ->
+    throw err if err
+    JSON.parse fs.readFileSync CONFIG_FILENAME, 'utf-8'
+
+apply_batch = (batch, direction, batches, done) ->
+  console.log "applying #{batch} #{direction}"
+  fn = if direction is 'up' then nconf.get("up") else nconf.get("down")
+  throw "batch file #{batch}/#{fn} does not exist" unless fs.existsSync batch + "/" + fn
+  batch_contents = fs.readFileSync batch + "/" + fn, "utf-8"
+  nconf.set "sets:#{batch}:#{direction}", crypt batch_contents
+  batch_contents = """
+DO $temp$
+BEGIN
+#{batch_contents}
+END
+$temp$;
+  """
+  idx = utils.index_of_batch batches, batch
+  temporary = temp.path()
+  fs.writeFileSync temporary, batch_contents, "utf-8"
+  pg = spawn 'psql', ["-U#{nconf.get('database:user')}", "-h#{nconf.get('database:host')}", nconf.get('database:name'), "-f#{temporary}"]
+  error = null
+  buffer = ""
+  pg.stdout.on 'data', (data) ->
+    buffer += data.toString('utf-8')
+  pg.stderr.on 'data', (data) ->
+    error = data.toString('utf-8')
+  pg.on 'close', ->
+    fs.unlinkSync temporary
+    if not error
+      console.log "success".green
+      if direction is "up"
+        nconf.set "pointer", batch
+      else
+        nconf.set "pointer", batches?[idx-1] or ""
+      persist nconf
+      show.run nconf
+    done error
+
+cmd_up = (nconf, params, persist) ->
+  count = params?[0] or '1'
+  all_batches = control.contents nconf
+  pointer = nconf.get 'pointer'
+  batches = utils.batches_to_apply all_batches, pointer, "up", count
+
+  async.eachSeries batches, (batch, done) ->
+    apply_batch batch, 'up', all_batches, done
+  , (err) ->
+    console.log err.red if err?
+
+cmd_down = (nconf, params, persist) ->
+  count = params?[0] or '1'
+  all_batches = control.contents nconf
+  pointer = nconf.get 'pointer'
+  batches = utils.batches_to_apply all_batches, pointer, "down", count
+
+  async.eachSeries batches, (batch, done) ->
+    apply_batch batch, 'down', all_batches, done
+  , (err) ->
+    console.log err.red if err?
+
+usage = ->
+  console.log """
+
+  verdb - transactional postgres DDL controller
+
+    init   - initialize new set of DDL files
+    set    - set a parameter
+    status - show current status
+    reset  - reset current pointer to first DDL batch
+  
+  """
+
+if argv._.length
+  cmd = argv._.shift().toLowerCase()
+  switch cmd
+    when "set"    then set.run nconf, argv._, persist
+    when "init"   then init.run nconf, argv._, persist
+    when "status" then show.run nconf
+    when "reset"  then reset.run nconf, persist
+    when "up"     then cmd_up nconf, argv._, persist
+    when "down"   then cmd_down nconf, argv._, persist
+else
+  usage()

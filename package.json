@@ -1,0 +1,22 @@
+{
+  "name": "verdb",
+  "description": "database version control",
+  "version": "0.0.1",
+  "author": "Aubrey Keus <aekeus@gmail.com>",
+  "dependencies": {
+    "nconf": ">= 0.6.9",
+    "optimist": "0.6.0",
+    "temp": "*",
+    "colors": "*",
+    "async": "*"
+  },
+  "bin": {
+    "verdb": "./bin/verdb"
+  },
+  "devDependencies": {
+    "tap" : "~0.4.0"
+  },
+  "scripts": {
+    "test": "tap ./test"
+  }
+}
