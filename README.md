@@ -1,1 +1,3 @@
-Database version control
+verdb - Database version control
+
+Only postgres for now.
