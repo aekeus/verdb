@@ -1,3 +1,11 @@
-verdb - Database version control
+# verdb
 
-Only postgres for now.
+database version control (postgres for now)
+
+# example
+
+```
+verdb init database postgres batches
+verdb status
+verdb up all
+```
