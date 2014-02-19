@@ -1,8 +1,5 @@
 cmds = require './cmds'
 
-exports.inject = (_console) ->
-  console = _console
-
 exports.run = (nconf, params, persist) ->
   throw "key required" unless params?[0]
   throw "value required" unless params?[1]
