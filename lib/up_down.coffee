@@ -7,7 +7,7 @@ spawn  = require('child_process').spawn
 
 utils   = require './utils'
 control = require './control'
-show    = require './show'
+status  = require './status'
 
 crypt = (text) -> crypto.createHash('md5').update(text).digest("hex")
 
@@ -57,7 +57,7 @@ $temp$;
         idx = utils.index_of_batch batches, batch
         nconf.set "pointer", batches?[idx-1] or ""
       persist nconf
-      show.run nconf
+      status.run nconf
     done error
 
 exports.run = (nconf, params, persist, direction) ->
