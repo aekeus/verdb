@@ -48,3 +48,15 @@ test "persist", (t) ->
 test "usage", (t) ->
   t.ok utils.usage?, "usage exists"
   t.end()
+
+test "batch_filename", (t) ->
+  nconf =
+    get: (k) ->
+      switch k
+        when "up"   then "up.sql"
+        when "down" then "down.sql"
+
+  t.equal utils.batch_filename("batch", "up", nconf), "batch/up.sql", "batch up"
+  t.equal utils.batch_filename("batch", "down", nconf), "batch/down.sql", "batch down"
+
+  t.end()

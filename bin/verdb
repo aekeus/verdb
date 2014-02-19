@@ -4,6 +4,7 @@ nconf  = require 'nconf'
 
 cmds      = require '../lib/cmds'
 status    = require '../lib/status'
+show      = require '../lib/show'
 set       = require '../lib/set'
 control   = require '../lib/control'
 reset     = require '../lib/reset'
@@ -23,6 +24,7 @@ if argv._.length
     when "set"    then set.run nconf, argv._, utils.persist
     when "init"   then init.run nconf, argv._, utils.persist
     when "status" then status.run nconf
+    when "show"   then show.run nconf, argv._
     when "reset"  then reset.run nconf, utils.persist
     when "up"     then up_down.run nconf, argv._, utils.persist, "up"
     when "down"   then up_down.run nconf, argv._, utils.persist, "down"

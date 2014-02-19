@@ -18,12 +18,8 @@ args_for_psql = (nconf, temporary) ->
   args.push "-f#{temporary}"
   args
 
-batch_filename = (batch, direction, nconf) ->
-  fn = if direction is 'up' then nconf.get("up") else nconf.get("down")
-  "#{batch}/#{fn}"
-
 apply_batch = (batch, direction, batches, nconf, persist, done) ->
-  fn = batch_filename batch, direction, nconf
+  fn = utils.batch_filename batch, direction, nconf
   console.log "applying #{batch} #{direction} from #{fn}"
   throw "batch file #{fn} does not exist" unless fs.existsSync fn
   batch_contents = fs.readFileSync fn, "utf-8"

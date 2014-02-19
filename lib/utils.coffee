@@ -32,5 +32,9 @@ exports.usage = ->
     reset  - reset current pointer to first DDL batch
     up     - apply a set of forward DDL batches [count={all,integer}]
     down   - apply a set of backward DDL batches [count={all,integer}]
-  
+    show   - output contents of batch [{batch name|prev|NEXT}, {UP|down}]
   """
+
+exports.batch_filename = (batch, direction, nconf) ->
+  fn = if direction is 'up' then nconf.get("up") else nconf.get("down")
+  "#{batch}/#{fn}"
