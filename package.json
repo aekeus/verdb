@@ -1,7 +1,7 @@
 {
   "name": "verdb",
   "description": "database version control",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Aubrey Keus <aekeus@gmail.com>",
   "homepage": "https://github.com/aekeus/verdb",
   "bugs": "https://github.com/aekeus/verdb/issues",

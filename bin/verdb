@@ -11,6 +11,8 @@ reset     = require '../lib/reset'
 init      = require '../lib/init'
 utils     = require '../lib/utils'
 up_down   = require '../lib/up_down'
+gen       = require '../lib/generate'
+
 constants = require '../lib/constants'
 
 argv = require('optimist').argv
@@ -28,6 +30,7 @@ if argv._.length
     when "reset"  then reset.run nconf, utils.persist
     when "up"     then up_down.run nconf, argv._, utils.persist, "up"
     when "down"   then up_down.run nconf, argv._, utils.persist, "down"
+    when "gen"    then gen.dispatch nconf, argv._
     else utils.usage()
 else
   utils.usage()
