@@ -15,9 +15,12 @@ EXECUTE PROCEDURE __FUNCTION__();
 
 down_template = """
 DROP TRIGGER __TRIGGER_NAME__ ON __TABLE__;
-DROP FUNCTION __FUNCTION__;
+DROP FUNCTION __FUNCTION__();
 
 """
+
+exports.inject = (_utils) ->
+  utils = _utils
 
 exports.generate = (batch, params, nconf, persist) ->
   table_name    = nconf.get "table"    or throw "table required"
