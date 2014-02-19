@@ -96,10 +96,12 @@ usage = ->
 
   verdb - transactional postgres DDL controller
 
-    init   - initialize new set of DDL files
-    set    - set a parameter
+    init   - initialize new set of DDL files [databasename, username, control_filename]
+    set    - set a parameter [parameter, value]
     status - show current status
     reset  - reset current pointer to first DDL batch
+    up     - apply a set of forward DDL batches [count={all,integer}]
+    down   - apply a set of backward DDL batches [count={all,integer}]
   
   """
 
@@ -112,5 +114,6 @@ if argv._.length
     when "reset"  then reset.run nconf, persist
     when "up"     then cmd_up nconf, argv._, persist
     when "down"   then cmd_down nconf, argv._, persist
+    else usage()
 else
   usage()
