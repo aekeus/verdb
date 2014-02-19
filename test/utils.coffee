@@ -35,3 +35,16 @@ test "parse_count", (t) ->
   t.equal utils.parse_count('3', batches), 3, 'integer input'
 
   t.end()
+
+test "persist", (t) ->
+  nconf =
+    save: (done) ->
+      t.ok true, "persist calls nconf save"
+
+  t.plan 1
+  utils.persist nconf
+  t.end()
+
+test "usage", (t) ->
+  t.ok utils.usage?, "usage exists"
+  t.end()
