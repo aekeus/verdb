@@ -1,4 +1,3 @@
-colors = require 'colors'
 trigger = require './generators/trigger'
 
 exports.dispatch = (nconf, params) ->
@@ -8,4 +7,4 @@ exports.dispatch = (nconf, params) ->
   switch type
     when 'trigger' then trigger.generate batch, params, nconf
     else
-      throw "unknown type #{type}".red
+      throw "unknown type #{type}"
