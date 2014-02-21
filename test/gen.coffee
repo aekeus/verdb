@@ -3,6 +3,24 @@ test = require('tap').test
 trg = require '../lib/generators/trigger'
 
 test "generate trigger", (t) ->
+  t.plan 7
+
+  nconf =
+    get: (k) ->
+      switch k
+        when 'func' then 'log_student'
+  t.throws ->
+    trg.generate "blah", [], nconf, ->
+  , "table required"
+
+  nconf =
+    get: (k) ->
+      switch k
+        when 'table' then 'foo'
+  t.throws ->
+    trg.generate "blah", [], nconf, ->
+  , "func required"
+
   nconf =
     get: (k) ->
       switch k
@@ -17,7 +35,6 @@ test "generate trigger", (t) ->
       t.ok down_buf.match(/DROP TRIGGER students_trg ON students/), "drop trigger"
       t.ok down_buf.match(/DROP FUNCTION log_student/), "drop function"
 
-  t.plan 5
   trg.inject utils
   trg.generate "student-trigger", [], nconf, ->
   t.end()
