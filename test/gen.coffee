@@ -2,6 +2,42 @@
 test = require('tap').test
 trg = require '../lib/generators/trigger'
 tbl = require '../lib/generators/table'
+idx = require '../lib/generators/index'
+
+test "generate index", (t) ->
+  t.plan 5
+  nconf =
+    get: (k) ->
+
+  t.throws ->
+    idx.generate "blah", [], nconf, ->
+  , "table required"
+
+  nconf =
+    get: (k) ->
+      switch k
+        when table then 'instructors'
+
+  t.throws ->
+    idx.generate "blah", [], nconf, ->
+  , "fields required"
+
+  nconf =
+    get: (k) ->
+      switch k
+        when "table" then "instructors"
+        when "fields" then "a,b,c"
+
+  utils =
+    create_batch: (batch, up_buf, down_buf, nconf, cb) ->
+      t.equal batch, "instructor-batch", "correct batch"
+      t.equal up_buf, "CREATE INDEX instructors_a_b_c_idx ON instructors(a,b,c);", "create index"
+      t.ok down_buf.match(/DROP INDEX instructors_a_b_c_idx;/), "drop index"
+
+  idx.inject utils
+  idx.generate "instructor-batch", [], nconf, ->
+
+  t.end()
 
 test "generate table", (t) ->
   t.plan 4

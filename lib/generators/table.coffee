@@ -16,7 +16,7 @@ DROP TABLE __TABLE__;
 exports.inject = (_utils) ->
   utils = _utils
 
-exports.generate = (batch, params, nconf, persist) ->
+exports.generate = (batch, params, nconf) ->
   table_name    = nconf.get("table")   or throw "table required"
 
   up_buf = up_template

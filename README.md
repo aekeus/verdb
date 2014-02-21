@@ -24,6 +24,12 @@ verdb status
 verdb up all
 ```
 
+```
+verdb gen trigger students --table=students --func=log_students
+verdb gen table instructors --table=instructors
+verdb gen index instructors-index --table=instructors --fields=name,location
+```
+
 # install
 
 With [npm](https://npmjs.org) do:
