@@ -1,4 +1,5 @@
 trigger = require './generators/trigger'
+table   = require './generators/table'
 
 exports.dispatch = (nconf, params) ->
   type = params?[0] or throw "type required"
@@ -6,5 +7,6 @@ exports.dispatch = (nconf, params) ->
   
   switch type
     when 'trigger' then trigger.generate batch, params, nconf
+    when 'table'   then table.generate batch, params, nconf
     else
       throw "unknown type #{type}"

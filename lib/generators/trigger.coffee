@@ -27,8 +27,6 @@ exports.generate = (batch, params, nconf, persist) ->
   function_name = nconf.get("func")    or throw "func required"
   trigger_name  = nconf.get("trigger") or "#{table_name}_trg"
 
-  console.log table_name, function_name, trigger_name
-
   up_buf = up_template
   up_buf = up_buf.replace new RegExp('__FUNCTION__', 'gi'), function_name
   up_buf = up_buf.replace '__TRIGGER_NAME__', trigger_name

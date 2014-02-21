@@ -1,6 +1,32 @@
 #!/usr/bin/env coffee
 test = require('tap').test
 trg = require '../lib/generators/trigger'
+tbl = require '../lib/generators/table'
+
+test "generate table", (t) ->
+  t.plan 4
+  nconf =
+    get: (k) ->
+
+  t.throws ->
+    tbl.generate "blah", [], nconf, ->
+  , "table required"
+
+  nconf =
+    get: (k) ->
+      switch k
+        when "table" then "students"
+
+  utils =
+    create_batch: (batch, up_buf, down_buf, nconf, cb) ->
+      t.equal batch, "student-table", "correct batch"
+      t.ok up_buf.match(/CREATE TABLE students/), "create table"
+      t.ok down_buf.match(/DROP TABLE students/), "drop table"
+
+  tbl.inject utils
+  tbl.generate "student-table", [], nconf, ->
+  
+  t.end()
 
 test "generate trigger", (t) ->
   t.plan 7
