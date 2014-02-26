@@ -22,6 +22,7 @@ executed correctly.
 verdb init database postgres batches
 verdb status
 verdb up all
+verdb show all
 ```
 
 ```

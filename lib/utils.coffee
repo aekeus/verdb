@@ -34,11 +34,13 @@ exports.usage = ->
     reset  - reset current pointer to first DDL batch
     up     - apply a set of forward DDL batches [count={all,integer}]
     down   - apply a set of backward DDL batches [count={all,integer}]
-    show   - output contents of batch [{batch name|prev|NEXT}, {UP|down}]
+    show   - output contents of batch [{batch name|all|prev|NEXT}, {UP|down}]
 
     gen    - generate a batch and a database object
 
-      gen trigger batch --table=students --func=add_student_log --trigger=students_trg
+      gen trigger batch-name --table=students --func=add_student_log --trigger=students_trg
+      gen table batch-name --table=instructors
+      gen index batch-name --table=instructors --fields=name,location --schema=sch
   """
 
 exports.batch_filename = (batch, direction, nconf) ->
