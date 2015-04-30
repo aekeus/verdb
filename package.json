@@ -1,7 +1,7 @@
 {
   "name": "verdb",
   "description": "database version control",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "author": "Aubrey Keus <aekeus@gmail.com>",
   "homepage": "https://github.com/aekeus/verdb",
   "bugs": "https://github.com/aekeus/verdb/issues",
@@ -10,7 +10,8 @@
     "optimist": "0.6.0",
     "temp": "*",
     "colors": "*",
-    "async": "*"
+    "async": "*",
+    "underscore": "*"
   },
    "keywords": [
     "postgres",
