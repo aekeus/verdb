@@ -28,15 +28,16 @@ exports.usage = ->
 
   verdb - transactional postgres DDL controller and generator
 
-    init   - initialize new set of DDL files [databasename, username, control_filename]
-    set    - set a parameter [parameter, value]
-    status - show current status
-    reset  - reset current pointer to first DDL batch
-    up     - apply a set of forward DDL batches [count={all,integer}]
-    down   - apply a set of backward DDL batches [count={all,integer}]
-    show   - output contents of batch [{batch name|all|prev|NEXT}, {UP|down}]
+    init    - initialize new set of DDL files [databasename, username, control_filename]
+    set     - set a parameter [parameter, value]
+    status  - show current status
+    reset   - reset current pointer to first DDL batch
+    up      - apply a set of forward DDL batches [count={all,integer}]
+    down    - apply a set of backward DDL batches [count={all,integer}]
+    show    - output contents of batch [{batch name|all|prev|NEXT}, {UP|down}]
+    extract - retrieve definition of a database object (stored procedure) [type={sp}, name]
 
-    gen    - generate a batch and a database object
+    gen     - generate a batch and a database object
 
       gen trigger batch-name --table=students --func=add_student_log --trigger=students_trg
       gen table batch-name --table=instructors

@@ -8,15 +8,10 @@ spawn  = require('child_process').spawn
 utils   = require './utils'
 control = require './control'
 status  = require './status'
+common  = require './common'
 
 crypt = (text) -> crypto.createHash('md5').update(text).digest("hex")
 
-args_for_psql = (nconf, temporary) ->
-  args = ["-U#{nconf.get('database:user')}"]
-  args.push "-h#{nconf.get('database:host')}" if nconf.get('database:host')
-  args.push nconf.get('database:name')
-  args.push "-f#{temporary}"
-  args
 
 apply_batch = (batch, direction, batches, nconf, persist, done) ->
   fn = utils.batch_filename batch, direction, nconf
@@ -34,7 +29,7 @@ $temp$;
   temporary = temp.path()
   fs.writeFileSync temporary, batch_contents, "utf-8"
 
-  args = args_for_psql nconf, temporary
+  args = common.args_for_psql nconf, temporary
 
   pg = spawn 'psql', args
   error = null
