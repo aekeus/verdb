@@ -23,6 +23,7 @@ verdb init database postgres batches
 verdb status
 verdb up all
 verdb show all
+verdb extract stored_procedure schema.name
 ```
 
 ```
