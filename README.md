@@ -1,6 +1,6 @@
 # verdb
 
-database version control (postgres for now)
+Database version control (PostgreSQL for now)
 
 # purpose
 
@@ -10,7 +10,7 @@ to a set of changes. The sub-directories must contain an 'up.sql' and a 'down.sq
 script. (although these filename may be changed)
 
 The list, and order of the changes, must be maintained in a control file. This file
-is simply an order list of sub-directories. The pointer will point to a single
+is an ordered list of sub-directories. The pointer will reference a single
 sub-directory name contained in this file.
 
 verdb maintains a pointer to the last batch (directory) of ddl scripts that
