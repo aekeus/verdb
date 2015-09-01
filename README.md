@@ -1,10 +1,6 @@
-# verdb
-
-Database version control (PostgreSQL for now)
-
 # purpose
 
-verdb manages the execution of postgres DDL scripts. It expects to be executed
+verdb manages the execution of PostgreSQL DDL scripts. It expects to be executed
 in a directory containing list of sub-directories, each of which corresponds
 to a set of changes. The sub-directories must contain an 'up.sql' and a 'down.sql'
 script. (although these filename may be changed)
