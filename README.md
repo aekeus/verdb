@@ -9,7 +9,7 @@ The list, and order of the changes, must be maintained in a control file. This f
 is an ordered list of sub-directories. The pointer will reference a single
 sub-directory name contained in this file.
 
-verdb maintains a pointer to the last batch (directory) of ddl scripts that
+verdb maintains a pointer to the last batch (directory) of DDL scripts that
 executed correctly.
 
 # example

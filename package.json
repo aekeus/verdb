@@ -1,7 +1,7 @@
 {
   "name": "verdb",
   "description": "database version control",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Aubrey Keus <aekeus@gmail.com>",
   "homepage": "https://github.com/aekeus/verdb",
   "bugs": "https://github.com/aekeus/verdb/issues",
@@ -15,6 +15,7 @@
   },
    "keywords": [
     "postgres",
+    "postgresql",
     "database",
     "version",
     "control"
